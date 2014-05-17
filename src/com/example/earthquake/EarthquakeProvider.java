@@ -16,7 +16,7 @@ import android.text.TextUtils;
 
 public class EarthquakeProvider extends ContentProvider {
 
-	public static final Uri CONTENT_URI=Uri.parse("content://com.example.earthprovider/earthquakes");
+	public static final Uri CONTENT_URI=Uri.parse("content://com.example.earthquakeprovider/earthquakes");
 	
 	public static final String KEY_ID="_id";
 	public static final String KEY_DATE="date";
@@ -144,8 +144,8 @@ public class EarthquakeProvider extends ContentProvider {
 	
 	static{
 		uriMatcher=new UriMatcher(UriMatcher.NO_MATCH);
-		uriMatcher.addURI("com.example.earthprovider", "earthquakes", QUAKES);
-		uriMatcher.addURI("com.example.earthprovider", "earthquakes/#", QUAKE_ID);
+		uriMatcher.addURI("com.example.earthquakeprovider", "earthquakes", QUAKES);
+		uriMatcher.addURI("com.example.earthquakeprovider", "earthquakes/#", QUAKE_ID);
 	}
 	
 	@Override
