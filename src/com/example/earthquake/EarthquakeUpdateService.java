@@ -24,6 +24,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import android.app.AlarmManager;
+import android.app.IntentService;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentResolver;
@@ -38,8 +39,14 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class EarthquakeUpdateService extends Service {
+public class EarthquakeUpdateService extends IntentService {
 
+	public EarthquakeUpdateService(String name) {
+		super(name);
+	}
+	public EarthquakeUpdateService() {
+		super("EarthquakeUpdateService");
+	}
 	public static String TAG="EARTHQUAKE_UPDATE_SERVICE";
 	
 	public void refreshEarthquakes()
@@ -132,7 +139,6 @@ public class EarthquakeUpdateService extends Service {
 	      Log.d(TAG, "SAX Exception", e);
 	    }
 	    finally {
-	    	stopSelf();
 	    }
 	}
 	private void addNewQuake(Quake _q)
@@ -162,10 +168,24 @@ public class EarthquakeUpdateService extends Service {
 		query.close();
 	 }
 
-	
+	private AlarmManager alarmManager;
+	private PendingIntent alarmIntent;
 	@Override
-	public int onStartCommand(Intent intent, int flags, int startId)
+	public void onCreate()
 	{
+		super.onCreate();
+		alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+		String ALARM_ACTION=EarthquakeAlarmReceiver.ACTION_REFRESH_EARTHQUAKE_ALARM;
+		Intent intentToFire=new Intent(ALARM_ACTION);
+		alarmIntent=PendingIntent.getBroadcast(this, 0, intentToFire, 0);
+	}
+	@Override
+	public IBinder onBind(Intent arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	protected void onHandleIntent(Intent intent) {
 		Context context=getApplicationContext();
 		SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(context);
 		
@@ -185,32 +205,7 @@ public class EarthquakeUpdateService extends Service {
 		{
 			alarmManager.cancel(alarmIntent);
 		}
-			Thread t=new Thread(new Runnable()
-			{
-				public void run() {
-					refreshEarthquakes();	
-				}
-				
-			});
-			t.start();
-		
-		return Service.START_NOT_STICKY;
-	}
-	private AlarmManager alarmManager;
-	private PendingIntent alarmIntent;
-	@Override
-	public void onCreate()
-	{
-		super.onCreate();
-		alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
-		String ALARM_ACTION=EarthquakeAlarmReceiver.ACTION_REFRESH_EARTHQUAKE_ALARM;
-		Intent intentToFire=new Intent(ALARM_ACTION);
-		alarmIntent=PendingIntent.getBroadcast(this, 0, intentToFire, 0);
-	}
-	@Override
-	public IBinder onBind(Intent arg0) {
-		// TODO Auto-generated method stub
-		return null;
+		refreshEarthquakes();					
 	}
 
 }
