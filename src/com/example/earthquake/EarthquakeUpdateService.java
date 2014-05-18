@@ -23,6 +23,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -32,6 +34,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -129,6 +132,7 @@ public class EarthquakeUpdateService extends Service {
 	      Log.d(TAG, "SAX Exception", e);
 	    }
 	    finally {
+	    	stopSelf();
 	    }
 	}
 	private void addNewQuake(Quake _q)
@@ -158,7 +162,6 @@ public class EarthquakeUpdateService extends Service {
 		query.close();
 	 }
 
-	private Timer updateTimer;
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
@@ -170,15 +173,18 @@ public class EarthquakeUpdateService extends Service {
 		
 		boolean autoUpdateChecked=prefs.getBoolean(PreferencesActivity.PREF_AUTO_UPDATE, false);
 		
-		updateTimer.cancel();
+		
 		if(autoUpdateChecked)
 		{
-			updateTimer=new Timer("earthquakeUpdates");
-			updateTimer.scheduleAtFixedRate(doRefresh, 0, updateFreq*60*1000);
-			
+			int alarmType=AlarmManager.ELAPSED_REALTIME_WAKEUP;
+			long timeToRefresh=SystemClock.elapsedRealtime()+
+					updateFreq*60*1000;
+			alarmManager.setInexactRepeating(alarmType, timeToRefresh, updateFreq*60*1000, alarmIntent);	
 		}
 		else
 		{
+			alarmManager.cancel(alarmIntent);
+		}
 			Thread t=new Thread(new Runnable()
 			{
 				public void run() {
@@ -187,22 +193,19 @@ public class EarthquakeUpdateService extends Service {
 				
 			});
 			t.start();
-		}
 		
-		return Service.START_STICKY;
+		return Service.START_NOT_STICKY;
 	}
-	private TimerTask doRefresh=new TimerTask()
-	{
-		public void run()
-		{
-			refreshEarthquakes();
-		}
-	};
+	private AlarmManager alarmManager;
+	private PendingIntent alarmIntent;
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
-		updateTimer=new Timer("earthquakeUpdates");
+		alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+		String ALARM_ACTION=EarthquakeAlarmReceiver.ACTION_REFRESH_EARTHQUAKE_ALARM;
+		Intent intentToFire=new Intent(ALARM_ACTION);
+		alarmIntent=PendingIntent.getBroadcast(this, 0, intentToFire, 0);
 	}
 	@Override
 	public IBinder onBind(Intent arg0) {
