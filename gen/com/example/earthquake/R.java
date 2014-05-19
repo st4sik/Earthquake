@@ -31,17 +31,23 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
+        public static final int EarthquakeFragmentContainer=0x7f080002;
         public static final int EarthquakeListFragment=0x7f080001;
-        public static final int cancelButton=0x7f080006;
-        public static final int checkbox_auto_update=0x7f080002;
-        public static final int okButton=0x7f080005;
+        public static final int EarthquakeMapFragment=0x7f080004;
+        public static final int cancelButton=0x7f08000a;
+        public static final int checkbox_auto_update=0x7f080006;
+        public static final int okButton=0x7f080009;
         public static final int seacrhView=0x7f080000;
-        public static final int spinner_quake_mag=0x7f080004;
-        public static final int spinner_update_freq=0x7f080003;
+        public static final int searchView=0x7f080003;
+        public static final int spinner_quake_mag=0x7f080008;
+        public static final int spinner_update_freq=0x7f080007;
+        public static final int textView1=0x7f080005;
     }
     public static final class layout {
         public static final int activity_earthquake=0x7f030000;
-        public static final int preferences=0x7f030001;
+        public static final int main=0x7f030001;
+        public static final int map_fragment=0x7f030002;
+        public static final int preferences=0x7f030003;
     }
     public static final class string {
         public static final int app_name=0x7f070000;
