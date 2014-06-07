@@ -3,14 +3,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     
-<SearchView
-    android:id="@+id/seacrhView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="#111"
-    android:iconifiedByDefault="false" >
-
-</SearchView>
     <fragment android:name="com.example.earthquake.EarthquakeListFragment"
     	android:id="@+id/EarthquakeListFragment"
     	android:layout_width="match_parent"

@@ -28,7 +28,8 @@
             />
         <provider android:name="com.example.earthquake.EarthquakeProvider"
             android:authorities="com.example.earthquakeprovider"/>
-                
+       
+        <activity android:name="com.example.earthquake.FragmentPreferences"/>
         <activity
             android:name="com.example.earthquake.Earthquake"
             android:label="@string/app_name" >

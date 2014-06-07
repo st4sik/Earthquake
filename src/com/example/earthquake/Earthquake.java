@@ -11,9 +11,12 @@ import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+//import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
@@ -29,11 +32,7 @@ public class Earthquake extends Activity {
 		setContentView(R.layout.activity_earthquake);
 		updateFromPreferences();
 
-		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchableInfo searchableInfo = searchManager
-				.getSearchableInfo(getComponentName());
-		SearchView searchView = (SearchView) findViewById(R.id.seacrhView);
-		searchView.setSearchableInfo(searchableInfo);
+		
 
 		ActionBar actionBar = getActionBar();
 		View fragmentContainer = findViewById(R.id.EarthquakeFragmentContainer);
@@ -73,7 +72,15 @@ public class Earthquake extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, MENU_PREFERENCES, menu.NONE, R.string.menu_preferences);
+		MenuInflater inflater=getMenuInflater();
+		inflater.inflate(R.menu.main_menu, menu);
+		
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		
+		
+		SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+		
 		return true;
 	}
 
@@ -83,13 +90,22 @@ public class Earthquake extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
-		case (MENU_PREFERENCES): {
-			Intent i = new Intent(this, PreferencesActivity.class);
-			startActivityForResult(i, SHOW_PREFERENCES);
+		case(R.id.menu_refresh):
+		{
+			startService(new Intent(this,EarthquakeUpdateService.class));
 			return true;
 		}
+		case (R.id.menu_preferences):
+		{
+			Class c=Build.VERSION.SDK_INT< Build.VERSION_CODES.HONEYCOMB ?
+					PreferencesActivity.class: FragmentPreferences.class;
+			Intent i=new Intent(this,c);
+			startActivityForResult(i,SHOW_PREFERENCES);
+			return true;
 		}
-		return false;
+		
+		default:return false;
+		}
 	}
 
 	public int minimumMagnitude = 0;
