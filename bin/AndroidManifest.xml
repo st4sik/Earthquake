@@ -3,33 +3,38 @@
     package="com.example.earthquake"
     android:versionCode="1"
     android:versionName="1.0" >
-	<uses-permission android:name="android.permission.INTERNET" />"
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="14" />
-	
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name">
-       <receiver android:name="com.example.earthquake.EarthquakeAlarmReceiver">
-           <intent-filter>
-               <action
-                   android:name="com.example.earthquake.ACTION_REFRESH_EARTHQUAKE_ALARM"/>
-               
-           </intent-filter>
-           </receiver>
-        
-         <service 
-            android:enabled="true"
-            android:name="com.example.earthquake.EarthquakeUpdateService"/>
-        <meta-data android:name="android.app.default_searchable"
-            android:value="com.example.earthquake.EarhquakeSearchResults"
-            />
-        <provider android:name="com.example.earthquake.EarthquakeProvider"
-            android:authorities="com.example.earthquakeprovider"/>
-       
-        <activity android:name="com.example.earthquake.FragmentPreferences"/>
+        android:label="@string/app_name" >
+        <receiver android:name="com.example.earthquake.EarthquakeAlarmReceiver" >
+            <intent-filter>
+                <action android:name="com.example.earthquake.ACTION_REFRESH_EARTHQUAKE_ALARM" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.example.earthquake.EarthquakeUpdateService"
+            android:enabled="true" />
+
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value="com.example.earthquake.EarhquakeSearchResults" />
+
+        <provider
+            android:name="com.example.earthquake.EarthquakeProvider"
+            android:authorities="com.example.earthquakeprovider" />
+
+        <activity android:name="com.example.earthquake.FragmentPreferences" />
         <activity
             android:name="com.example.earthquake.Earthquake"
             android:label="@string/app_name" >
@@ -39,22 +44,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.earthquake.PreferencesActivity"
-            android:label="Earthquake Preferences"
-            >
-            
+        <activity
+            android:name="com.example.earthquake.PreferencesActivity"
+            android:label="Earthquake Preferences" >
         </activity>
-         <activity android:name="com.example.earthquake.EarhquakeSearchResults"
-           android:label="Earthquake Search"
-           android:launchMode="singleTop">
-           <intent-filter>
-               <action android:name="android.intent.action.SEARCH"/>
-               <category android:name="android.intent.category.DEFAULT"/>
-           </intent-filter>
-           <meta-data 
-               android:name="android.app.searchable"
-               android:resource="@xml/searchable"/>
-       </activity>
-       </application>
-      
+        <activity
+            android:name="com.example.earthquake.EarhquakeSearchResults"
+            android:label="Earthquake Search"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+    </application>
+
 </manifest>

@@ -29,6 +29,7 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
+        public static final int notification_icon=0x7f020001;
     }
     public static final class id {
         public static final int EarthquakeFragmentContainer=0x7f090001;
@@ -36,10 +37,11 @@ public final class R {
         public static final int EarthquakeMapFragment=0x7f090003;
         public static final int cancelButton=0x7f090009;
         public static final int checkbox_auto_update=0x7f090005;
-        public static final int menu_preferences=0x7f09000c;
-        public static final int menu_refresh=0x7f09000b;
-        public static final int menu_search=0x7f09000a;
+        public static final int menu_preferences=0x7f09000d;
+        public static final int menu_refresh=0x7f09000c;
+        public static final int menu_search=0x7f09000b;
         public static final int okButton=0x7f090008;
+        public static final int quakeDetailsTextView=0x7f09000a;
         public static final int searchView=0x7f090002;
         public static final int spinner_quake_mag=0x7f090007;
         public static final int spinner_update_freq=0x7f090006;
@@ -50,6 +52,7 @@ public final class R {
         public static final int main=0x7f030001;
         public static final int map_fragment=0x7f030002;
         public static final int preferences=0x7f030003;
+        public static final int quake_details=0x7f030004;
     }
     public static final class menu {
         public static final int main_menu=0x7f080000;
