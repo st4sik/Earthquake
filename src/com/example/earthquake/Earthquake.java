@@ -1,5 +1,8 @@
 package com.example.earthquake;
 
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
+
 import android.app.ActionBar.Tab;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -21,14 +24,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 
-public class Earthquake extends Activity {
+public class Earthquake extends MapActivity {
 
 	TabListener<EarthquakeListFragment> listTabListener;
 	TabListener<EarthquakeMapFragment> mapTabListener;
-
+	MapView mapView;
+	String MyMapAPIKey="1";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mapView=new MapView(this,MyMapAPIKey);
 		setContentView(R.layout.activity_earthquake);
 		updateFromPreferences();
 
@@ -235,5 +240,11 @@ public class Earthquake extends Activity {
 			int actionBarIndex = sp.getInt(ACTION_BAR_INDEX, 0);
 			getActionBar().setSelectedNavigationItem(actionBarIndex);
 		}
+	}
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

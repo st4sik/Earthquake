@@ -3,15 +3,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     
-    <fragment android:name="com.example.earthquake.EarthquakeListFragment"
-    	android:id="@+id/EarthquakeListFragment"
-    	android:layout_width="match_parent"
-    	android:layout_height="match_parent"
-    	/>
+    
+
     <FrameLayout
-    android:id="@+id/EarthquakeFragmentContainer"
-    android:layout_width="match_parent" 
-    android:layout_height="match_parent">
+        android:id="@+id/EarthquakeFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
   </FrameLayout>
     </LinearLayout>
 

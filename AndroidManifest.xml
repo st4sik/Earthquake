@@ -16,6 +16,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
+        <uses-library android:name="com.google.android.maps" />
+
         <receiver android:name="com.example.earthquake.EarthquakeAlarmReceiver" >
             <intent-filter>
                 <action android:name="com.example.earthquake.ACTION_REFRESH_EARTHQUAKE_ALARM" />
