@@ -244,6 +244,8 @@ public class EarthquakeUpdateService extends IntentService {
 		return null;
 	}
 
+	public static String QUAKES_REFRESHED="com.example.earthquake.QUAKES_REFRESHED";
+	
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Context context = getApplicationContext();
@@ -266,6 +268,7 @@ public class EarthquakeUpdateService extends IntentService {
 			alarmManager.cancel(alarmIntent);
 		}
 		refreshEarthquakes();
+		sendBroadcast(new Intent(QUAKES_REFRESHED));
 	}
 
 }
