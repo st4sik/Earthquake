@@ -29,6 +29,8 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -127,10 +129,11 @@ public class EarthquakeUpdateService extends IntentService {
 						l.setLongitude(Double.parseDouble(location[1]));
 
 						String magnitudeString = details.split(" ")[1];
-						int end = magnitudeString.length() - 1;
+						int end = magnitudeString.length();
 						double magnitude = Double.parseDouble(magnitudeString
 								.substring(0, end));
-
+						String a=magnitudeString
+								.substring(0, end);
 						if (details.contains(",")) {
 							details = details.split(",")[1].trim();
 						} else {
@@ -244,8 +247,8 @@ public class EarthquakeUpdateService extends IntentService {
 		return null;
 	}
 
-	public static String QUAKES_REFRESHED="com.example.earthquake.QUAKES_REFRESHED";
-	
+	public static String QUAKES_REFRESHED = "com.example.earthquake.QUAKES_REFRESHED";
+
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Context context = getApplicationContext();
@@ -269,6 +272,16 @@ public class EarthquakeUpdateService extends IntentService {
 		}
 		refreshEarthquakes();
 		sendBroadcast(new Intent(QUAKES_REFRESHED));
+
+		AppWidgetManager appWidgetManager = AppWidgetManager
+				.getInstance(context);
+
+		ComponentName earthquakeWidget = new ComponentName(context,
+				EarthquakeListWidget.class);
+		int[] appWidgetIds = appWidgetManager.getAppWidgetIds(earthquakeWidget);
+		appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds,
+				R.id.widget_list_view);
+
 	}
 
 }
