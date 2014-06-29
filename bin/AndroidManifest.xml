@@ -64,9 +64,15 @@
         <provider
             android:name="EarthquakeProvider"
             android:authorities="com.example.earthquakeprovider"
-            android:exported="true"
-           />
+            android:exported="true" />
 
+        <activity
+            android:name="com.example.earthquake.EarthquakeLiveFolders$EarthquakeLiveFolder"
+            android:label="All Earthquakes" >
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_LIVE_FOLDER" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.example.earthquake.FragmentPreferences" />
         <activity
             android:name="com.example.earthquake.Earthquake"
